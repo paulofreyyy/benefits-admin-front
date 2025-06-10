@@ -1,0 +1,52 @@
+<div>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-table"
+    *ngIf="!isLoading; else loading"
+  >
+    <!-- First Name Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
+    </ng-container>
+
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef>Sobrenome</th>
+      <td mat-cell *matCellDef="let user">{{ user.lastName }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+    </ng-container>
+
+    <!-- Role Column -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Tipo de usuário</th>
+      <td mat-cell *matCellDef="let user">
+        <span>
+          {{ getRoleLabel(user.role) }}
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Empty State -->
+    <tr *ngIf="dataSource.length === 0">
+      <td colspan="4" class="text-center">Nenhum usuário encontrado.</td>
+    </tr>
+  </table>
+
+  <!-- Loading Spinner -->
+  <ng-template #loading>
+    <div class="text-center p-4">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Carregando usuários...</p>
+    </div>
+  </ng-template>
+</div>
