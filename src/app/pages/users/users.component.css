@@ -1,0 +1,21 @@
+.container {
+  margin: 20px 40px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      font-weight: 500;
+    }
+  }
+
+  table {
+    background-color: #fff;
+  }
+
+  mat-paginator{
+    background-color: #fff;
+  }
+}

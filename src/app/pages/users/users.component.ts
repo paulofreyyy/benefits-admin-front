@@ -1,31 +1,47 @@
 import { UserRoles, Users } from './../../shared/models/users.model';
-import { Component, inject, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UsersService } from '../../services/users.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-users',
+    standalone: true,
     imports: [
         MatTableModule,
         MatProgressSpinnerModule,
-        CommonModule
+        CommonModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatChipsModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatIconModule
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.css'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, AfterViewInit {
     private usersService = inject(UsersService);
-    dataSource: Users[] = [];
-    displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role'];
+    dataSource = new  MatTableDataSource<Users>();
+    displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
     isLoading = false;
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
 
     ngOnInit(): void {
         this.isLoading = true;
         this.usersService.getUsers().subscribe({
-            next: (data) => {
-                this.dataSource = data
+            next: (data: Users[]) => {
+                this.dataSource.data = data
                 this.isLoading = false
             },
             error: (err) => {
@@ -34,6 +50,12 @@ export class UsersComponent implements OnInit {
             }
         })
     }
+
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    }
+
 
     getRoleLabel(role: UserRoles): string {
         switch (role) {

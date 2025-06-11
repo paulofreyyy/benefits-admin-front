@@ -4,6 +4,16 @@
   <div class="buttons">
     <button
       mat-button
+      [routerLink]="'/'"
+      class="menu-btn"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>home</mat-icon>
+      Dashboard
+    </button>
+    <button
+      mat-button
       [routerLink]="'/usuarios'"
       class="menu-btn"
       routerLinkActive="active"
