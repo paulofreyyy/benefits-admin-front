@@ -1,0 +1,43 @@
+<mat-toolbar color="primary" class="menu-toolbar">
+  <span class="logo">BENEFTIS</span>
+  <span class="spacer"></span>
+  <div class="buttons">
+    <button
+      mat-button
+      [routerLink]="'/usuarios'"
+      class="menu-btn"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>groups</mat-icon>
+      Usuários
+    </button>
+    <button
+      mat-button
+      [routerLink]="'/beneficios'"
+      class="menu-btn"
+      routerLinkActive="active"
+    >
+      <mat-icon>payments</mat-icon>
+      Benefícios
+    </button>
+    <button
+      mat-button
+      [routerLink]="'/beneficios'"
+      class="menu-btn"
+      routerLinkActive="active"
+    >
+      <mat-icon>sell</mat-icon>
+      Vouchers
+    </button>
+    <button
+      mat-button
+      [routerLink]="'/perfil'"
+      class="menu-btn"
+      routerLinkActive="active"
+    >
+      <mat-icon>person</mat-icon>
+      Perfil
+    </button>
+  </div>
+</mat-toolbar>
