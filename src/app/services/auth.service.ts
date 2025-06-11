@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable, tap } from "rxjs";
+import { Users } from "../shared/models/users.model";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
             tap((response: any) => {
                 if (response && response.access_token) {
                     localStorage.setItem('token', response.access_token)
+                    localStorage.setItem('userId', response.userId)
                 }
             })
         )
