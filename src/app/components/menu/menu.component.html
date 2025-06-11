@@ -1,0 +1,34 @@
+<mat-toolbar color="primary" class="menu-toolbar">
+  <span class="logo">BENEFTIS</span>
+  <span class="spacer"></span>
+  <div class="buttons">
+    <button
+      mat-button
+      [routerLink]="'/'"
+      class="menu-btn"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>storefront</mat-icon>
+      Catálogo
+    </button>
+    <button
+      mat-button
+      [routerLink]="'/pedidos'"
+      class="menu-btn"
+      routerLinkActive="active"
+    >
+      <mat-icon>receipt_long</mat-icon>
+      Pedidos
+    </button>
+    <button
+      mat-button
+      [routerLink]="'/perfil'"
+      class="menu-btn"
+      routerLinkActive="active"
+    >
+      <mat-icon>person</mat-icon>
+      Perfil
+    </button>
+  </div>
+</mat-toolbar>
