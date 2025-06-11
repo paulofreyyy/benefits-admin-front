@@ -10,6 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-users',
@@ -23,14 +24,15 @@ import { MatIconModule } from '@angular/material/icon';
         MatChipsModule,
         MatPaginatorModule,
         MatSortModule,
-        MatIconModule
+        MatIconModule,
+        RouterModule,
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit, AfterViewInit {
     private usersService = inject(UsersService);
-    dataSource = new  MatTableDataSource<Users>();
+    dataSource = new MatTableDataSource<Users>();
     displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
     isLoading = false;
 
