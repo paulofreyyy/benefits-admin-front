@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Users } from '../shared/models/users.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +15,7 @@ export class UsersService {
         return this.http.get<Users[]>(`${this.apiUrl}/users`)
     }
 
-    getProfile(userId: string) {
-        return this.http.get<Users>(`${this.apiUrl}/users/${userId}`)
+    getUserById(userId: string) {
+        return this.http.get<Users>(`${this.apiUrl}/users/${userId}`, )
     }
 }

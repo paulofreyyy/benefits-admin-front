@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit{
     userData: Users | null = null
 
     ngOnInit(): void {
-        this.usersService.getProfile(this.userId).subscribe({
+        this.usersService.getUserById(this.userId).subscribe({
             next: (data) => {
                 this.userData = data
             },

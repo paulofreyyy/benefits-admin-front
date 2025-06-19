@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="header">
+    <h2>Vouchers</h2>
+  </div>
+
+  <form [formGroup]="voucherForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Usuário</mat-label>
+      <mat-select formControlName="userId" required>
+        <mat-option *ngFor="let user of users" [value]="user._id">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Benefício</mat-label>
+      <mat-select formControlName="benefitId" required>
+        <mat-option *ngFor="let benefit of benefits" [value]="benefit._id">
+          {{ benefit.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Valor do Voucher</mat-label>
+      <input matInput type="number" formControlName="value" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data de Expiração</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="expiresAt"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="voucherForm.invalid"
+    >
+      Conceder Voucher
+    </button>
+  </form>
+</div>
