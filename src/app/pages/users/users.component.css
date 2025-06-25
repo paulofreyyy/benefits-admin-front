@@ -29,5 +29,22 @@ table{
 }
 mat-paginator{
   background-color: transparent;
+  padding: 24px;
 }
+
+.header h2 {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+table{
+  background-color: transparent;
+}
+mat-paginator{
+  background-color: transparent;
+}
+
 
