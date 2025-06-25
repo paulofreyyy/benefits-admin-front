@@ -12,7 +12,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { CreateVoucherComponent } from "../vouchers/create/create-voucher.component";
-import { MatDialog } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
     selector: 'app-users',
@@ -28,17 +28,22 @@ import { MatDialog } from '@angular/material/dialog';
         MatSortModule,
         MatIconModule,
         RouterModule,
+        CreateVoucherComponent,
+        MatSidenavModule
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit, AfterViewInit {
     private usersService = inject(UsersService);
-    private dialog = inject(MatDialog);
     private router = inject(Router);
+
     dataSource = new MatTableDataSource<Users>();
     displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
     isLoading = false;
+
+    selectedUser: Users | null = null;
+    drawerOpened = false;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -74,14 +79,17 @@ export class UsersComponent implements OnInit, AfterViewInit {
         }
     }
 
-    openVoucherModal(user: any): void {
-        this.dialog.open(CreateVoucherComponent, {
-            width: '500px',
-            data: { user }
-        });
+    openDrawer(user: any) {
+        this.selectedUser = user;
+        this.drawerOpened = true;
     }
 
-    goToVoucherHistory(user: any) {
+    closeDrawer() {
+        this.drawerOpened = false;
+        this.selectedUser = null;
+    }
+
+    goToVoucherHistory(user: Users) {
         this.router.navigate(['/vouchers-history'], {
             queryParams: { userId: user._id }
         });

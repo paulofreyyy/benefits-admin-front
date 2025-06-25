@@ -1,21 +1,33 @@
+.drawer-container {
+  height: calc(100vh - 64px);
+  width: 100%;
+  background: transparent;
+}
+
+.drawer {
+  width: 600px;
+  padding: 24px;
+  border-radius: 0 !important;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);}
+
 .container {
   margin: 20px 40px;
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h2 {
-      font-weight: 500;
-    }
-  }
-
-  table {
-    background-color: #fff;
-  }
-
-  mat-paginator{
-    background-color: #fff;
-  }
+  padding: 24px;
 }
+
+.header h2 {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+table{
+  background-color: transparent;
+}
+mat-paginator{
+  background-color: transparent;
+}
+

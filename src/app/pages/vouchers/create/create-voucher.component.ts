@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -14,7 +14,7 @@ import { BenefitsService } from "../../../services/benefits.service";
 import { Benefits } from "../../../shared/models/beneftis.model";
 import { VouchersService } from "../../../services/vouchers.service";
 import { CreateVoucherDto } from "../../../shared/models/vouchers.model";
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 @Component({
     selector: 'app-create-voucher',
@@ -29,7 +29,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
         MatFormFieldModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatDialogModule,
+        MatSidenavModule,
     ],
     templateUrl: './create-voucher.component.html',
     styleUrl: './create-voucher.component.css'
@@ -40,19 +40,23 @@ export class CreateVoucherComponent implements OnInit {
     private usersService = inject(UsersService)
     private benefitsService = inject(BenefitsService)
     private vouchersService = inject(VouchersService)
-    public data = inject(MAT_DIALOG_DATA)
+
+    @Input() selectedUser: Users | null = null;
+    @Output() close = new EventEmitter<void>();
 
     users: Users[] = [];
     benefits: Benefits[] = [];
 
     voucherForm = this.fb.group({
-        userId: [this.data.user._id, Validators.required],
         benefitId: ['', Validators.required],
         value: [0, [Validators.required, Validators.min(1)]],
         expiresAt: [null, Validators.required],
     })
 
-    constructor(private dialogRef: MatDialogRef<CreateVoucherComponent>) { }
+    get selectedUserName(): string {
+        if (!this.selectedUser) return '';
+        return `${this.selectedUser.firstName} ${this.selectedUser.lastName}`;
+    }
 
     ngOnInit(): void {
         this.usersService.getUsers().subscribe({
@@ -70,10 +74,15 @@ export class CreateVoucherComponent implements OnInit {
         });
     }
 
+    cancel() {
+        this.voucherForm.reset();
+        this.close.emit();
+    }
+
     onSubmit() {
         if (this.voucherForm.valid) {
             const voucherData: CreateVoucherDto = {
-                userId: this.voucherForm.value.userId!,
+                userId: this.selectedUser?._id!,
                 benefitId: this.voucherForm.value.benefitId!,
                 value: this.voucherForm.value.value!,
                 expiresAt: this.voucherForm.value.expiresAt!
@@ -89,6 +98,7 @@ export class CreateVoucherComponent implements OnInit {
                     console.error('Erro ao criar voucher:', err);
                 }
             });
+            this.close.emit();
         }
     }
 }
