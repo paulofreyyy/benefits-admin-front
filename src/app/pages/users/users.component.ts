@@ -10,7 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CreateVoucherComponent } from "../vouchers/create/create-voucher.component";
 import { MatDialog } from '@angular/material/dialog';
 
@@ -35,6 +35,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class UsersComponent implements OnInit, AfterViewInit {
     private usersService = inject(UsersService);
     private dialog = inject(MatDialog);
+    private router = inject(Router);
     dataSource = new MatTableDataSource<Users>();
     displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
     isLoading = false;
@@ -77,6 +78,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.dialog.open(CreateVoucherComponent, {
             width: '500px',
             data: { user }
+        });
+    }
+
+    goToVoucherHistory(user: any) {
+        this.router.navigate(['/vouchers-history'], {
+            queryParams: { userId: user._id }
         });
     }
 }
