@@ -42,6 +42,13 @@
       <th mat-header-cell *matHeaderCellDef>Ações</th>
       <td mat-cell *matCellDef="let user">
         <button mat-icon-button matTooltip="Histórico de vouchers">
+          <mat-icon>schedule</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          matTooltip="Conceder Voucher"
+          (click)="openVoucherModal(user)"
+        >
           <mat-icon>sell</mat-icon>
         </button>
       </td>

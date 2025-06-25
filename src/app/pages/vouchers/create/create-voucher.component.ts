@@ -14,6 +14,7 @@ import { BenefitsService } from "../../../services/benefits.service";
 import { Benefits } from "../../../shared/models/beneftis.model";
 import { VouchersService } from "../../../services/vouchers.service";
 import { CreateVoucherDto } from "../../../shared/models/vouchers.model";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
     selector: 'app-create-voucher',
@@ -28,6 +29,7 @@ import { CreateVoucherDto } from "../../../shared/models/vouchers.model";
         MatFormFieldModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatDialogModule,
     ],
     templateUrl: './create-voucher.component.html',
     styleUrl: './create-voucher.component.css'
@@ -38,16 +40,19 @@ export class CreateVoucherComponent implements OnInit {
     private usersService = inject(UsersService)
     private benefitsService = inject(BenefitsService)
     private vouchersService = inject(VouchersService)
+    public data = inject(MAT_DIALOG_DATA)
 
     users: Users[] = [];
     benefits: Benefits[] = [];
 
     voucherForm = this.fb.group({
-        userId: ['', Validators.required],
+        userId: [this.data.user._id, Validators.required],
         benefitId: ['', Validators.required],
         value: [0, [Validators.required, Validators.min(1)]],
         expiresAt: [null, Validators.required],
     })
+
+    constructor(private dialogRef: MatDialogRef<CreateVoucherComponent>) { }
 
     ngOnInit(): void {
         this.usersService.getUsers().subscribe({

@@ -11,6 +11,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { CreateVoucherComponent } from "../vouchers/create/create-voucher.component";
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-users',
@@ -32,6 +34,7 @@ import { RouterModule } from '@angular/router';
 })
 export class UsersComponent implements OnInit, AfterViewInit {
     private usersService = inject(UsersService);
+    private dialog = inject(MatDialog);
     dataSource = new MatTableDataSource<Users>();
     displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
     isLoading = false;
@@ -68,5 +71,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
             default:
                 return role
         }
+    }
+
+    openVoucherModal(user: any): void {
+        this.dialog.open(CreateVoucherComponent, {
+            width: '500px',
+            data: { user }
+        });
     }
 }

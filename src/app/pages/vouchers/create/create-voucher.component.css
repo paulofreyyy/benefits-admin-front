@@ -1,13 +1,26 @@
-.container {
-  margin: 20px 40px;
+.voucher-modal-content {
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
 
-  .header {
+  .modal-title {
+    margin-bottom: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .modal-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
+    margin-top: 24px;
 
-    h2 {
-      font-weight: 500;
+    button + button {
+      margin-left: 12px;
     }
   }
 }
