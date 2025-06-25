@@ -1,78 +1,95 @@
-<div class="container">
-  <div class="header">
-    <h2>Usuários</h2>
-  </div>
-
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    *ngIf="!isLoading; else loading"
+<mat-sidenav-container class="drawer-container" autosize>
+  <mat-sidenav
+    position="end"
+    mode="side"
+    [(opened)]="drawerOpened"
+    (closedStart)="closeDrawer()"
+    class="drawer"
   >
-    <!-- First Name Column -->
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
-      <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
-    </ng-container>
+    <app-create-voucher
+      [selectedUser]="selectedUser"
+      (close)="closeDrawer()"
+    ></app-create-voucher>
+  </mat-sidenav>
 
-    <!-- Last Name Column -->
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sobrenome</th>
-      <td mat-cell *matCellDef="let user">{{ user.lastName }}</td>
-    </ng-container>
+  <mat-sidenav-content class="content">
+    <div class="container">
+      <div class="header">
+        <h2>Usuários</h2>
+      </div>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
-      <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-    </ng-container>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        *ngIf="!isLoading; else loading"
+      >
+        <!-- First Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
+        </ng-container>
 
-    <!-- Role Column -->
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
-      <td mat-cell *matCellDef="let user">
-        <mat-chip>
-          {{ getRoleLabel(user.role) }}
-        </mat-chip>
-      </td>
-    </ng-container>
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Sobrenome</th>
+          <td mat-cell *matCellDef="let user">{{ user.lastName }}</td>
+        </ng-container>
 
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Ações</th>
-      <td mat-cell *matCellDef="let user">
-        <button
-          mat-icon-button
-          matTooltip="Histórico de vouchers"
-          (click)="goToVoucherHistory(user)"
-        >
-          <mat-icon>schedule</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          matTooltip="Conceder Voucher"
-          (click)="openVoucherModal(user)"
-        >
-          <mat-icon>sell</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+          <td mat-cell *matCellDef="let user">
+            <mat-chip>
+              {{ getRoleLabel(user.role) }}
+            </mat-chip>
+          </td>
+        </ng-container>
 
-    <!-- Empty State -->
-    <tr *ngIf="dataSource.data.length === 0">
-      <td colspan="4" class="text-center">Nenhum usuário encontrado.</td>
-    </tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let user">
+            <button
+              mat-icon-button
+              matTooltip="Histórico de vouchers"
+              (click)="goToVoucherHistory(user)"
+            >
+              <mat-icon>schedule</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Conceder Voucher"
+              (click)="openDrawer(user)"
+            >
+              <mat-icon>sell</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
-  <!-- Loading Spinner -->
-  <ng-template #loading>
-    <div class="text-center p-4">
-      <mat-spinner diameter="40"></mat-spinner>
-      <p>Carregando usuários...</p>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="dataSource.data.length === 0">
+          <td colspan="4" class="text-center">Nenhum usuário encontrado.</td>
+        </tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+      <!-- Loading Spinner -->
+      <ng-template #loading>
+        <div class="text-center p-4">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Carregando usuários...</p>
+        </div>
+      </ng-template>
     </div>
-  </ng-template>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
